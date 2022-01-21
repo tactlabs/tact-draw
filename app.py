@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from minio import Minio
+import json
 import os
 
 load_dotenv()
@@ -9,6 +10,10 @@ load_dotenv()
 # LOCAL_FILE_PATH = os.environ.get('LOCAL_FILE_PATH')
 ACCESS_KEY      = os.environ.get('ACCESS_KEY')
 SECRET_KEY      = os.environ.get('SECRET_KEY')
+
+# cluster = MongoClient(os.environ.get('MONGO_URI'))
+# db = cluster["Talkflix"]
+# col = db["show"]
 
 app = Flask(__name__)
 
@@ -62,7 +67,12 @@ def index():
 @app.route('/add', methods = ['GET', 'POST'])
 def upload_files():
     if request.method == 'POST':
-        uploaded_file = request.files['file']
+
+        name             = request.values.get("name")
+        mail_id          = request.values.get("mailid")
+        phone_no         = request.values.get("phno")
+        uploaded_file    = request.files['file']
+
         global filename
         filename = secure_filename(uploaded_file.filename)
         if filename != '':
@@ -72,19 +82,40 @@ def upload_files():
         global LOCAL_FILE_PATH
         LOCAL_FILE_PATH = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
-        found = MINIO_CLIENT.bucket_exists("first")
+        my_dict = {}
 
+        my_dict ["Name"]                = name
+        my_dict ["mail_id"]             = mail_id
+        my_dict ["phone_no "]           = phone_no 
+        my_dict ["uploaded_file"]       = filename
+
+
+        # x = col.insert_one(my_dict)
+        # return x
+
+        user = {}
+
+        user_list=[]
+
+        # with open( f"users.json", "w") as outfile:
+            
+        #     user["user_list"]=user_list
+
+        #     if my_dict != "":
+
+        #         user_list.append(my_dict)
+
+        #     outfile.write(json.dumps(dict(user_list)))
+
+        found = MINIO_CLIENT.bucket_exists("first")
         if not found:
             MINIO_CLIENT.make_bucket("first")
         else:
             print("Bucket already exists")
-
-        MINIO_CLIENT.fput_object("first", filename,LOCAL_FILE_PATH,)
-        
+        MINIO_CLIENT.fput_object("first", filename,LOCAL_FILE_PATH,)       
         print("It is successfully uploaded")
 
         all_images = get_all_images()
-
         all_videos = get_all_videos()
 
         return render_template('index.html', images = all_images, videos =all_videos)
