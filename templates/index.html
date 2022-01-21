@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Tact Image gallery </title>
+  <style>
+    figure {
+      margin: 15px 0;
+    }
+  
+    figcaption {
+      text-align: center;
+    }
+  
+    .grayscale {
+      filter: grayscale(0);
+    }
+  
+    .grayscale:hover {
+      filter: grayscale(50%)
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <div class="jumbotron">
+      <h1 class="text-center">Tact Gallery</h1>
+      <a href='/add'>
+        <button type="submit" class="btn btn-primary my-4" style="float:right;">Add pictures</button>
+    </a>
+    
+      <!-- <p class="text-center">Upload Pictures</p> -->
+     
+    </div>
+
+    {% if images %}
+   
+
+    <div class="row">
+          
+        {% for image in images %}
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <figure>
+          <img src="{{ image }}" class="img-thumbnail grayscale">
+  
+        </figure>
+      </div>
+      {% endfor %}
+    </div>
+
+  
+
+    {% endif %}
+
+
+    {% if videos %} 
+
+       {% for video in videos %}
+
+    <div class="row">
+      <div class="col-sm-6 col-md-4 col-lg-3">
+        <figure>
+        
+          <video class="img-thumbnail grayscale"> 
+            <source src="{{ video }}" type="video/mp4"> 
+        </video>
+          <figcaption>URL : {{ video }}</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    {% endfor %}
+
+    {% endif %}
+  </div>
+
+  
+
+</body>
+
+</html>
+
