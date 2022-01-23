@@ -64,8 +64,11 @@ def index():
 
     return render_template('index.html', images = all_images, videos =all_videos)
 
+user_dict={}
+
 @app.route('/add', methods = ['GET', 'POST'])
 def upload_files():
+    
     if request.method == 'POST':
 
         name             = request.values.get("name")
@@ -89,23 +92,40 @@ def upload_files():
         my_dict ["phone_no "]           = phone_no 
         my_dict ["uploaded_file"]       = filename
 
+        
+        
+        # if os.stat(f"users.json").st_size==0:
+        #     global user_dict
+        #     user_dict={}
+        #     user_dict.update(my_dict)
+        # else:
+
+
+        #filename='users.json'
+        # with open( f"users.json", "r+") as outfile:
+
+        #     file_data= json.load(outfile)
+        #     print(file_data)
+        #     file_data.update(my_dict)
+        #     #outfile.seek(0)
+
+        #     outfile.write(json.dumps(file_data))
+
+
+        with open( f"users.json", "r+") as outfile:
+            file_data = json.load(outfile)
+            print(file_data)
+            file_data['users'][name]=my_dict
+            #outfile.seek(0)
+
+            outfile.write(json.dumps(file_data))
+
+        #except json.decoder.JSONDecodeError:
+            #file_data
 
         # x = col.insert_one(my_dict)
         # return x
 
-        user = {}
-
-        user_list=[]
-
-        # with open( f"users.json", "w") as outfile:
-            
-        #     user["user_list"]=user_list
-
-        #     if my_dict != "":
-
-        #         user_list.append(my_dict)
-
-        #     outfile.write(json.dumps(dict(user_list)))
 
         found = MINIO_CLIENT.bucket_exists("first")
         if not found:

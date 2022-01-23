@@ -1,0 +1,16 @@
+{
+    "users": {
+        "aaaaaaa": {
+            "Name": "aaaaaaa",
+            "mail_id": "aaaaaaa@gmail.com",
+            "phone_no ": "9814237713",
+            "uploaded_file": "pic2.jpg"
+        },
+        "bbbbbb": {
+            "Name": "bbbbbb",
+            "mail_id": "aaaaaaa@gmail.com",
+            "phone_no ": "9814237713",
+            "uploaded_file": "pic1.jpg"
+        }
+    }
+}
