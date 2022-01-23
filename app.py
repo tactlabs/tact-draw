@@ -3,9 +3,9 @@ from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from minio import Minio
 import pymongo
-from pymongo import MongoClient
 import json
 import os
+from pymongo import MongoClient
 
 load_dotenv()
 
