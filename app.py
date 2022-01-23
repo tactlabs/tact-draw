@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
 from minio import Minio
+import pymongo
+from pymongo import MongoClient
 import json
 import os
 
@@ -11,9 +13,9 @@ load_dotenv()
 ACCESS_KEY      = os.environ.get('ACCESS_KEY')
 SECRET_KEY      = os.environ.get('SECRET_KEY')
 
-# cluster = MongoClient(os.environ.get('MONGO_URI'))
-# db = cluster["Talkflix"]
-# col = db["show"]
+cluster = MongoClient(os.environ.get('MONGO_URI'))
+db = cluster["TactDraw"]
+col = db["Details"]
 
 app = Flask(__name__)
 
@@ -39,8 +41,9 @@ def get_all_images():
 
     images = [f"{MINIO_API_HOST}/{BUCKET_NAME}/{image}" for image in images]
   
-    print(images)
     return images
+
+
 
 def get_all_videos():
     
@@ -53,7 +56,6 @@ def get_all_videos():
 
     videos = [f"{MINIO_API_HOST}/{BUCKET_NAME}/{video}" for video in videos]
     
-    print(videos)
     return videos
 
 @app.route('/')
@@ -86,14 +88,69 @@ def upload_files():
         LOCAL_FILE_PATH = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
         my_dict = {}
-
+ 
         my_dict ["Name"]                = name
         my_dict ["mail_id"]             = mail_id
         my_dict ["phone_no "]           = phone_no 
         my_dict ["uploaded_file"]       = filename
 
-        
-        
+
+        found = MINIO_CLIENT.bucket_exists("first")
+        if not found:
+            MINIO_CLIENT.make_bucket("first")
+        else:
+            print("Bucket already exists")
+        MINIO_CLIENT.fput_object("first",filename,LOCAL_FILE_PATH,)       
+        print("It is successfully uploaded")
+
+        all_images = get_all_images()
+        all_videos = get_all_videos()
+
+        my_dict["url"] =  get_url(filename)
+
+        upload_details(my_dict)
+
+        names = get_details()
+
+        return render_template('index.html', images = all_images, videos =all_videos, names = names)
+
+    return render_template('upload.html')
+
+
+def get_url(filename):
+
+    for single_object in MINIO_CLIENT.list_objects(BUCKET_NAME, recursive=True):
+
+        if (single_object.object_name.endswith((".jpg", ".png", ".jpeg",))) and  single_object.object_name == filename :
+
+          images = f"{MINIO_API_HOST}/{BUCKET_NAME}/{single_object.object_name}"
+
+          break
+  
+    return images
+
+
+def upload_details(my_dict):
+
+    x = col.insert_one(my_dict)
+
+    return x
+
+def get_details():
+
+    name = []
+    for x in col.find({},{ "_id":0,"Name": 1, "uploaded_file": 1, "url":1}):
+        name.append(x)
+    print (name)
+    return name
+
+
+if __name__ == "__main__":
+    
+    app.run(debug=True,host="0.0.0.0",port="3012")
+
+
+     
         # if os.stat(f"users.json").st_size==0:
         #     global user_dict
         #     user_dict={}
@@ -112,38 +169,16 @@ def upload_files():
         #     outfile.write(json.dumps(file_data))
 
 
-        with open( f"users.json", "r+") as outfile:
-            file_data = json.load(outfile)
-            print(file_data)
-            file_data['users'][name]=my_dict
-            #outfile.seek(0)
+        # with open( f"users.json", "r+") as outfile:
+        #     file_data = json.load(outfile)
+        #     print(file_data)
+        #     file_data['users'][name]=my_dict
+        #     #outfile.seek(0)
 
-            outfile.write(json.dumps(file_data))
+        #     outfile.write(json.dumps(file_data))
 
         #except json.decoder.JSONDecodeError:
             #file_data
 
-        # x = col.insert_one(my_dict)
-        # return x
-
-
-        found = MINIO_CLIENT.bucket_exists("first")
-        if not found:
-            MINIO_CLIENT.make_bucket("first")
-        else:
-            print("Bucket already exists")
-        MINIO_CLIENT.fput_object("first", filename,LOCAL_FILE_PATH,)       
-        print("It is successfully uploaded")
-
-        all_images = get_all_images()
-        all_videos = get_all_videos()
-
-        return render_template('index.html', images = all_images, videos =all_videos)
-
-    return render_template('upload.html')
-
-if __name__ == "__main__":
-    
-    app.run(debug=True,host="0.0.0.0",port="3012")
 
 

@@ -1,0 +1,15 @@
+
+
+
+mongodb name nd file - send this array to html - if ths filename == minio - images array to jinja - link - split filename in jinja
+
+    display name 
+
+
+
+names[
+ {'Name': 'ac', 'uploaded_file': 's6.png', 'url': 'http://localhost:9000/first/s6.png'}, ---- name["Name]
+ {'Name': 'abc', 'uploaded_file': 't1.png', 'url': 'http://localhost:9000/first/t1.png'},
+ {'Name': 'abc', 'uploaded_file': 't1.png', 'url': 'http://localhost:9000/first/t1.png'}, 
+ {'Name': 'abcdef', 'uploaded_file': 't4.png', 'url': 'http://localhost:9000/first/t4.png'}
+ ]
