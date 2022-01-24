@@ -1,3 +1,6 @@
+from cgi import test
+from itertools import count
+from random import randint
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from werkzeug.utils import secure_filename
 from dotenv import load_dotenv
@@ -66,6 +69,11 @@ def index():
 
     all_videos = get_all_videos()
 
+    if request.method == 'POST':
+
+        num_like = request.values.get('like')
+        print(num_like)
+
     return render_template('index.html', images = all_images, videos =all_videos,names = names)
 
 
@@ -88,8 +96,19 @@ def upload_files():
         global LOCAL_FILE_PATH
         LOCAL_FILE_PATH = os.path.join(app.config['UPLOAD_FOLDER'], filename)
 
+        count=0
+
+        test = get_details()
+
         my_dict = {}
- 
+
+        for i in test:
+            count+=1
+
+        count="000"+str(count)
+            
+        my_dict ["id"]                  = count
+
         my_dict ["Name"]                = name
         my_dict ["mail_id"]             = mail_id
         my_dict ["phone_no "]           = phone_no 
@@ -114,6 +133,11 @@ def upload_files():
         names = get_details()
 
         return render_template('index.html', images = all_images, videos =all_videos, names = names)
+
+    if request.method == 'POST':
+
+        num_like = request.values.get('like')
+        print(num_like)
 
     return render_template('upload.html')
 

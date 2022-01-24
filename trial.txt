@@ -40,3 +40,26 @@ names[
       </div>
 
     {% endif %}
+
+
+
+
+      // document.addEventListener('DOMContentLoaded', likes(),{
+
+    //   numLikes = numLikes + 1;
+    //   document.getElementById({{ name["Name"] }}).innerHTML = numLikes;
+
+    // });
+
+
+
+// function likes() {
+    //   numLikes = numLikes + 1;
+    //   document.getElementById({{ name["Name"] }}).innerHTML = numLikes;
+    // }
+
+    // function reset() {
+    //   numLikes = 0;
+    //   document.getElementById("likes").innerHTML = numLikes;
+    // }
+

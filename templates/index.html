@@ -84,29 +84,34 @@
 
         <!-- <p>{{ url }}</p> -->
 
-
-
-
         <img src="{{ url }}" class="img-thumbnail grayscale">
-
-
 
         <br><br>
 
-    
-        <!-- <div class="like-number">
-                      <p><span id="likes">0</span>Likes</p>
-                    </div> -->
 
-        <!-- <div class="like-icon">
-          <button onclick="likes()">
-          <i class="far fa-thumbs-up"></i>
-        </button> -->
-<h5>Name: {{ name["Name"] }}</h5>
+        <form action = "/" method = "POST" enctype = "multipart/form-data">
 
-        <span style="font-size: 20px; color: black;">
+          
+          <div class="like-number">
+            <p><span id="likes" name="like">0</span>Likes</p>
+          </div>
+          
+          
+          <div class="like-icon">
+
+            <!-- Hit Like:<input type="button" value="{{ name["Name"] }}" name="like"> -->
+            
+            Like : <button onclick="likes()">
+              <i class="far fa-thumbs-up"></i>
+            </button>
+            
+        </form>
+
+      <h5>Name: {{ name["Name"] }}</h5>
+
+        <!-- <span style="font-size: 20px; color: black;">
           Like: <i class="far fa-thumbs-up" ></i>
-        </span>
+        </span> -->
         
        
           {% endif %}
@@ -152,21 +157,15 @@
   <script>
     var numLikes = 0;
 
+
     function likes() {
       numLikes = numLikes + 1;
       document.getElementById("likes").innerHTML = numLikes;
+
     }
 
-    function reset() {
-      numLikes = 0;
-      document.getElementById("likes").innerHTML = numLikes;
-    }
 
   </script>
-
-
-
-
 
 
 </body>
