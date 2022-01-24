@@ -7,252 +7,168 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
-  <title>Tact Image gallery </title>
-  <style>
-    figure {
-      margin: 15px 0;
-    }
-  
-    figcaption {
-      text-align: center;
-    }
-  
-    .grayscale {
-      filter: grayscale(0);
-    }
-  
-    .grayscale:hover {
-      filter: grayscale(50%)
-    }
+  <script src="https://kit.fontawesome.com/c8e4d183c2.js" crossorigin="anonymous"></script>
+</head>
 
+<style>
+  figure {
+    margin: 15px 0;
+  }
 
-/* 
-    .modal-window {
-        position: fixed;
-        background-color: rgba(255, 255, 255, 0.25);
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        z-index: 999;
-        visibility: hidden;
-        opacity: 0;
-        pointer-events: none;
-        transition: all 0.3s;
-        }
-        .modal-window:target {
-        visibility: visible;
-        opacity: 1;
-        pointer-events: auto;
-        }
-        .modal-window > div {
-        width: 400px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 2em;
-        background: white;
-        }
-        .modal-window header {
-        font-weight: bold;
-        }
-        .modal-window h1 {
-        font-size: 150%;
-        margin: 0 0 15px;
-        }
+  figcaption {
+    text-align: center;
+  }
 
-        .modal-close {
-        color: #aaa;
-        line-height: 50px;
-        font-size: 80%;
-        position: absolute;
-        right: 0;
-        text-align: center;
-        top: 0;
-        width: 70px;
-        text-decoration: none;
-        }
-        .modal-close:hover {
-        color: black;
-        }
+  .grayscale {
+    filter: grayscale(0);
+  }
 
-        /* Demo Styles */
-        html,
-        body {
-        height: 100%;
-        }
-
-        html {
-        font-size: 18px;
-        line-height: 1.4;
-        }
-/* 
-        body {
-        font-family: apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-        font-weight: 600;
-        background-image: linear-gradient(to right, #7f53ac 0, #657ced 100%);
-        color: black;
-        } */
-
-        a {
-        color: inherit;
-        }
-
-        .container {
-        display: grid;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        }
-
-        .modal-window > div {
-        border-radius: 1rem;
-        }
-
-        .modal-window div:not(:last-of-type) {
-        margin-bottom: 15px;
-        }
-
-        small {
-        color: lightgray;
-        } */
-
-        /* .btn {
-        background-color: white;
-        padding: 1em 1.5em;
-        border-radius: 1rem;
-        text-decoration: none;
-        } */
-        /* .btn i {
-        padding-right: 0.3em;
-        } */
+  .grayscale:hover {
+    filter: grayscale(50%)
+  }
 
 
-  </style>
+</style>
 </head>
 
 <body>
-  <div class="container-fluid">
 
-    <div class="jumbotron">
-      <h1 class="text-center">Tact Gallery</h1>
-      <a href='/add'>
-        <button type="submit" class="btn btn-primary my-4" style="float:right;">Add pictures</button>
+
+  <nav class="navbar navbar-light">
+    <a class="navbar-brand" href="#">
+      <img src="static/img/brand/tact.jpg" width="70" height="70" alt="">
     </a>
-    
-      <!-- <p class="text-center">Upload Pictures</p> -->
+
+
+    <h1 class="text-center" style="color: black; margin-right: -3rem;">TACT GALLERY</h1>
+
+    <a href='/add'>
+      <button type="submit" class="btn btn-primary my-4" style="float:right; background-color: rgb(115,102,228);">Add
+        pictures</button>
+    </a>
+
+  </nav>
+
+  <hr class="rounded" style="border-top: 8px solid rgb(115,102,228);border-radius: 5px;">
+
+  <!-- <div class="container-fluid">
+
+    <div class="jumbotron" style="background-color: rgb(115,102,228);">
+   
+  
+     <p class="text-center">Upload Pictures</p>
      
     </div>
-    {% if images %}
-   
-      <div class="row">
-            
-        {% for image in images %}
-      
+ -->
 
-          <div class="col-sm-6 col-md-4 col-lg-3">
+  <br><br>
+  {% if names %}
 
-         
-            <figure>
+  <div class="row">
 
-              <img src="{{ image }}" class="img-thumbnail grayscale"></a> 
-
-              <p>{{ image.replace('http://localhost:9000/first/','') }}</p>
-
-  
-
-              <!-- <a class="btn" href="#open-modal">-->
-             
-              <!-- <div class="container">
-                <div class="interior">
-                </div>
-              </div>
-              <div id="open-modal" class="modal-window">
-                <div>
-                  <a href="#" title="Close" class="modal-close">Close</a>
-                  <h1>Voilà!</h1> 
-                  <div>Name: </div> 
-                  <div><button type="submit" class="btn btn-primary my-4">Vote</button></div>
-                  <div><small>Check out</small></div>
-                  <a href="https://aminoeditor.com" target="_blank">👉 Amino: Live CSS Editor for Chrome</div> 
-                  </div>
-              </div> -->
-
-            </figure>
-          </div>
-
-        {% endfor %}
-
-      </div>
-
-    {% endif %}
+    {% for name in names %}
 
 
-    {% if videos %} 
 
-       {% for video in videos %}
+    <div class="col-sm-6 col-md-4 col-lg-3">
 
-    <div class="row">
-      <div class="col-sm-6 col-md-4 col-lg-3">
-        <figure>
+      {% for Name, url in name.items() %}
+
+
+
+      <figure style="background-color: whitesmoke;">
+
+        {% if 'http' in url %}
+
+        <!-- <p>{{ url }}</p> -->
+
+
+
+
+        <img src="{{ url }}" class="img-thumbnail grayscale">
+
+
+
+        <br><br>
+
+    
+        <!-- <div class="like-number">
+                      <p><span id="likes">0</span>Likes</p>
+                    </div> -->
+
+        <!-- <div class="like-icon">
+          <button onclick="likes()">
+          <i class="far fa-thumbs-up"></i>
+        </button> -->
+<h5>Name: {{ name["Name"] }}</h5>
+
+        <span style="font-size: 20px; color: black;">
+          Like: <i class="far fa-thumbs-up" ></i>
+        </span>
         
-          <video class="img-thumbnail grayscale"> 
-            <source src="{{ video }}" type="video/mp4"> 
-        </video>
-          <figcaption>URL : {{ video }}</figcaption>
-        </figure>
-      </div>
+       
+          {% endif %}
+
+
+      </figure>
+
+
+      {% endfor %}
+
     </div>
 
     {% endfor %}
 
-    {% endif %}
+
   </div>
 
+  {% endif %}
 
-   
+
+  {% if videos %}
+
+  {% for video in videos %}
+
   <div class="row">
-        
-    {% for name in names %}
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <figure>
 
-      <div class="col-sm-6 col-md-4 col-lg-3">
-
-        {% for Name, url in name.items() %}
-        
-            <figure>
-
-              {% if 'http' in url %}
-
-                <!-- <p>{{ url }}</p> -->
-
-                <div class="shadow-lg p-3 mb-5 bg-white rounded">
-
-                  <img src="{{ url }}" class="img-thumbnail grayscale"></a> 
-
-                </div>
-
-              {% endif %}
-              
-            </figure>
-            
-            <!-- <p>{{ Name }}</p>  -->
-            <i class="fa-regular fa-thumbs-up"></i>
-
-          {% endfor %}
-        
-      </div>
-
-    {% endfor %}
-
+        <video class="img-thumbnail grayscale">
+          <source src="{{ video }}" type="video/mp4">
+        </video>
+        <figcaption>URL : {{ video }}</figcaption>
+      </figure>
+    </div>
   </div>
 
+  {% endfor %}
 
-  
+  {% endif %}
+  </div>
+  <br><br>
+
+  <script>
+    var numLikes = 0;
+
+    function likes() {
+      numLikes = numLikes + 1;
+      document.getElementById("likes").innerHTML = numLikes;
+    }
+
+    function reset() {
+      numLikes = 0;
+      document.getElementById("likes").innerHTML = numLikes;
+    }
+
+  </script>
+
+
+
+
+
 
 </body>
 
 </html>
-

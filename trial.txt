@@ -13,3 +13,30 @@ names[
  {'Name': 'abc', 'uploaded_file': 't1.png', 'url': 'http://localhost:9000/first/t1.png'}, 
  {'Name': 'abcdef', 'uploaded_file': 't4.png', 'url': 'http://localhost:9000/first/t4.png'}
  ]
+
+
+    {% if images %}
+   
+      <div class="row">
+            
+        {% for image in images %}
+      
+
+          <div class="col-sm-6 col-md-4 col-lg-3">
+
+         
+            <figure>
+
+              <img src="{{ image }}" class="img-thumbnail grayscale"></a> 
+
+              <p>{{ image.replace('http://localhost:9000/first/','') }}</p>
+            
+
+            </figure>
+          </div>
+
+        {% endfor %}
+
+      </div>
+
+    {% endif %}

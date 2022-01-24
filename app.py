@@ -60,13 +60,14 @@ def get_all_videos():
 
 @app.route('/')
 def index():
+    names = get_details()
+    
     all_images = get_all_images()
 
     all_videos = get_all_videos()
 
-    return render_template('index.html', images = all_images, videos =all_videos)
+    return render_template('index.html', images = all_images, videos =all_videos,names = names)
 
-user_dict={}
 
 @app.route('/add', methods = ['GET', 'POST'])
 def upload_files():
@@ -141,7 +142,7 @@ def get_details():
     name = []
     for x in col.find({},{ "_id":0,"Name": 1, "uploaded_file": 1, "url":1}):
         name.append(x)
-    print (name)
+
     return name
 
 
